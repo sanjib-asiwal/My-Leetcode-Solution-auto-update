@@ -21,11 +21,11 @@ public:
 
         while (!q.empty()) {
             int sz = q.size();
-            vector<int> temp;
+            int temp=INT_MIN;
             while (sz--) {
                 TreeNode* node = q.front();
                 q.pop();
-                temp.push_back(node->val);
+                if(node->val>temp) temp=node->val;
                 
                 if (node->left) {
                     q.push(node->left);
@@ -35,8 +35,8 @@ public:
                     q.push(node->right);
                 }
             }
-            int maxi=*max_element(temp.begin(),temp.end());
-            ans.push_back(maxi);
+           // int maxi=*max_element(temp.begin(),temp.end());
+            ans.push_back(temp);
         }
         return ans;
     }
