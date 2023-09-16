@@ -35,7 +35,6 @@ public:
                     q.push(node->right);
                 }
             }
-           // int maxi=*max_element(temp.begin(),temp.end());
             ans.push_back(temp);
         }
         return ans;
