@@ -11,58 +11,34 @@
  */
 class Solution {
 public:
-    int getMaxleaveNode(int x, int y) {
-    if (y == 0) return 1;
-    int ans = getMaxleaveNode(x, y / 2);
-    if (y % 2 == 0) return ans * ans;
-    else return ans * ans * x;
-}
-
-    bool isNullNode(TreeNode *root,int Max_NodesinLastLevel,int mid){
-        if(mid>Max_NodesinLastLevel)
-        return true;
-        int low=1,high=Max_NodesinLastLevel;
-        while(high>low){
-            int m=(low+high)/2;
-            if(mid<=m){
-                root=root->left;
-                high=m;
-            }else{
-                root=root->right;
-                low=m+1;
-            }
+    pair<bool,int>isPerfect(TreeNode* root){
+        int hleft=0;
+        TreeNode *tmp=root;
+        while(tmp){
+            hleft++;
+            tmp=tmp->left;
         }
-        return !root;
-    }
-    int getHeight(TreeNode *root){
-        int ans=0;
-        while(root){
-            ans++; root=root->left;
+        int hRight=0;
+        tmp=root;
+        while(tmp){
+            hRight++;
+            tmp=tmp->right;
         }
-        return ans;
+        return {hleft==hRight,hleft};
     }
     int countNodes(TreeNode* root) {
         if(!root)return 0;
-        int ht=getHeight(root);
-        int base=2;
-        int Max_NodesinLastLevel=getMaxleaveNode(base,ht-1);
-        
-        int low=1,high=Max_NodesinLastLevel;
-        int ans,mid;
-        while(low<=high){
-            mid=(low+high)/2;
-            bool x=isNullNode(root,Max_NodesinLastLevel,mid);
-            if(x)
-                high=mid-1;
-            else{
-                if(isNullNode(root,Max_NodesinLastLevel,mid+1)){
-                    ans=mid;
-                    break;
-                }
-                else
-                    low=mid+1;
-            }
-        }
-        return ans+(Max_NodesinLastLevel-1);
+        int cnt=1;
+        pair<bool,int>pLeft=isPerfect(root->left);
+        pair<bool,int>pRight=isPerfect(root->right);
+        if(pLeft.first)
+            cnt+=pow(2,pLeft.second)-1;
+        else
+            cnt+=countNodes(root->left);
+        if(pRight.first)
+            cnt+=pow(2,pRight.second)-1;
+        else
+            cnt+=countNodes(root->right);
+        return cnt;
     }
 };
