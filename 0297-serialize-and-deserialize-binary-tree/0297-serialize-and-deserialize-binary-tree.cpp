@@ -11,7 +11,7 @@ class Codec {
 public:
     void serialization(TreeNode* root,string & s){
         if(!root){
-            s+="N ";
+            s+=", ";
             return;
         }
         s+=to_string(root->val);
@@ -28,7 +28,7 @@ public:
     
   TreeNode*  deserialization(int& i,string & data){
      
-        if(data[i] == 'N'){
+        if(data[i] == ','){
             i+=2;
             return NULL;
         }
