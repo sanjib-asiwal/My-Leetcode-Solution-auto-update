@@ -11,18 +11,24 @@
  */
 class Solution {
 public:
-    int ans = 0 ;
-    void solve(TreeNode * root , long long sum){
-        if(!root) return ;
-        if(root->val == sum) ans++ ;
-        solve(root->left , sum - root->val) ;
-        solve(root->right , sum - root->val) ;
+    int solve(TreeNode* root, long long currSum, int targetSum, unordered_map<long long,int>&mp){
+        if(root == NULL) return 0;      
+        
+        currSum += root->val;
+        
+        int res = 0;
+        if(mp.find(currSum-targetSum) != mp.end()) res = mp[currSum-targetSum];
+        
+        mp[currSum]++;
+        res += solve(root->left, currSum, targetSum, mp);
+        res += solve(root->right, currSum, targetSum, mp);
+        mp[currSum]--;
+        
+        return res;
     }
     int pathSum(TreeNode* root, int targetSum) {
-        if(!root)  return 0 ;
-        solve(root , targetSum) ;
-        pathSum(root->left , targetSum) ;
-        pathSum(root->right , targetSum) ;
-        return ans ;
+        unordered_map<long long,int>mp;
+        mp[0]++;
+        return solve(root, 0, targetSum, mp);
     }
 };
