@@ -23,7 +23,7 @@ public:
             idx++;
         }
         if(cd!=depth) return NULL;
-        while(idx<s.size() && st.find(s[idx]) != st.end()){
+        while(idx<s.size() && s[idx] != '-'){
             temp+=s[idx];
             idx++;
         }
