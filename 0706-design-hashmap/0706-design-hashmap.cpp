@@ -1,21 +1,22 @@
 class MyHashMap {
 public:
-    vector<int> x;
+   vector<int> vec;
     MyHashMap() {
-        vector<int>y(1000001,-1);
-        x=y;
+     vector<int> temp(1000001,-1);
+     vec=temp;   
     }
     
     void put(int key, int value) {
-        x[key]=value;
+        vec[key]=value;
+
     }
     
     int get(int key) {
-        return x[key];
+     return vec[key];
     }
     
     void remove(int key) {
-        x[key]=-1;
+      vec[key]=-1;
     }
 };
 
